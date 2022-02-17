@@ -117,6 +117,39 @@ build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
 
 build edit_cache: phony CMakeFiles/edit_cache.util
 
+# =============================================================================
+# Object build statements for EXECUTABLE target Reporter
+
+
+#############################################
+# Order-only phony target for Reporter
+
+build cmake_object_order_depends_target_Reporter: phony || CMakeFiles/Reporter.dir
+
+build CMakeFiles/Reporter.dir/Reporter/reporterMain.cpp.obj: CXX_COMPILER__Reporter_Debug C$:/Users/Maksim/Documents/C$ projects/Operating$ Systems$ Labs/lab1/Reporter/reporterMain.cpp || cmake_object_order_depends_target_Reporter
+  DEP_FILE = CMakeFiles\Reporter.dir\Reporter\reporterMain.cpp.obj.d
+  FLAGS = -g -std=gnu++98
+  OBJECT_DIR = CMakeFiles\Reporter.dir
+  OBJECT_FILE_DIR = CMakeFiles\Reporter.dir\Reporter
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target Reporter
+
+
+#############################################
+# Link the executable Reporter.exe
+
+build Reporter.exe: CXX_EXECUTABLE_LINKER__Reporter_Debug CMakeFiles/Reporter.dir/Reporter/reporterMain.cpp.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\Reporter.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = Reporter.exe
+  TARGET_IMPLIB = libReporter.dll.a
+  TARGET_PDB = Reporter.exe.dbg
+
 
 #############################################
 # Utility command for rebuild_cache
@@ -134,6 +167,8 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 build Creator: phony Creator.exe
 
+build Reporter: phony Reporter.exe
+
 build lab1: phony lab1.exe
 
 # =============================================================================
@@ -144,7 +179,7 @@ build lab1: phony lab1.exe
 #############################################
 # Folder: C:/Users/Maksim/Documents/C projects/Operating Systems Labs/lab1/cmake-build-debug
 
-build all: phony Creator.exe lab1.exe
+build all: phony Creator.exe lab1.exe Reporter.exe
 
 # =============================================================================
 # Built-in targets

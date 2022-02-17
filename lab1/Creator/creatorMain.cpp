@@ -10,11 +10,11 @@ struct employee{
 void addEmployeeToFile(FILE* outputFile) {
     employee newEmployee = {};
     printf("Input new employee data\n");
-    printf("Number: ");
+    printf("Number:");
     scanf("%d", &newEmployee.num);
-    printf("Name: ");
+    printf("Name:");
     scanf("%s",newEmployee.name);
-    printf("Hours: ");
+    printf("Hours:");
     scanf("%lf",&newEmployee.hours);
 
     fwrite(&newEmployee,sizeof(employee),1,outputFile);

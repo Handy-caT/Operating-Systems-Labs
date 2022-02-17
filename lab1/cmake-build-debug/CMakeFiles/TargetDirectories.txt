@@ -1,4 +1,5 @@
 C:/Users/Maksim/Documents/C projects/Operating Systems Labs/lab1/cmake-build-debug/CMakeFiles/Creator.dir
 C:/Users/Maksim/Documents/C projects/Operating Systems Labs/lab1/cmake-build-debug/CMakeFiles/lab1.dir
 C:/Users/Maksim/Documents/C projects/Operating Systems Labs/lab1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Maksim/Documents/C projects/Operating Systems Labs/lab1/cmake-build-debug/CMakeFiles/Reporter.dir
 C:/Users/Maksim/Documents/C projects/Operating Systems Labs/lab1/cmake-build-debug/CMakeFiles/rebuild_cache.dir

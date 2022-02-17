@@ -16,7 +16,8 @@
 					"targetIndexes" : 
 					[
 						0,
-						1
+						1,
+						2
 					]
 				}
 			],
@@ -32,7 +33,8 @@
 					"targetIndexes" : 
 					[
 						0,
-						1
+						1,
+						2
 					]
 				}
 			],
@@ -43,6 +45,13 @@
 					"id" : "Creator::@6890427a1f51a3e7e1df",
 					"jsonFile" : "target-Creator-Debug-cee14bc9f23c36672e5a.json",
 					"name" : "Creator",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Reporter::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Reporter-Debug-2f06b3883903dee72edb.json",
+					"name" : "Reporter",
 					"projectIndex" : 0
 				},
 				{
