@@ -1,0 +1,3 @@
+/Users/maksim/Documents/C++/Operating-Systems-Labs/lab3C23/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/maksim/Documents/C++/Operating-Systems-Labs/lab3C23/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/maksim/Documents/C++/Operating-Systems-Labs/lab3C23/cmake-build-debug/CMakeFiles/lab3C23.dir
