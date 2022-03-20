@@ -1,9 +1,11 @@
 #include <iostream>
 #include <thread>
+#include "marker.h"
 
 int main() {
-    struct sigaction act;
 
-    std::cout << "Hello, World!" << std::endl;
+    Marker markerClass;
+    std::thread t(&Marker::markerMain,std::ref(markerClass));
+    t.join();
     return 0;
 }
