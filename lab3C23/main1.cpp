@@ -5,16 +5,31 @@
 #include <vector>
 #include <queue>
 
-
+void print(int* array, int size) {
+    int i = 0;
+    while(i < size) {
+        std::cout << array[i] << " ";
+        ++i;
+    }
+    std::cout << std::endl;
+}
 
 int size;
 int*array;
 int markerCount;
+int deletedMarkersCount;
+int indexMarkerToStop;
+
+bool finalWork;
 bool continueWork;
+bool stop;
+bool markerStopWait;
 
-
+std::condition_variable finalContinue;
 std::condition_variable markerContinue;
 std::condition_variable queueCheck;
+std::condition_variable endMarker;
+
 std::mutex arrayMutex;
 std::mutex queueMutex;
 std::mutex printMutex;
@@ -22,11 +37,12 @@ std::mutex printMutex;
 std::queue<int> errorMarkersIndexes;
 
 void marker(int markerNumber) {
+
     {
         std::unique_lock<std::mutex> locker(arrayMutex);
         while(!continueWork) markerContinue.wait(locker);
     }
-
+    srand(markerNumber);
 
     int rNumber;
     int* changedNumbers = new int[size];
@@ -48,24 +64,60 @@ void marker(int markerNumber) {
 
         } else {
             array_locker.unlock();
+            /*
             {
                 std::unique_lock<std::mutex> locker(printMutex);
                 std::cout << markerNumber << " " << changedCount << " " << rNumber << std::endl;
             }
+            */
             {
                 std::unique_lock<std::mutex> locker(queueMutex);
                 errorMarkersIndexes.push(markerNumber);
                 queueCheck.notify_one();
             }
-            ind = false;
+            /*
             {
                 std::unique_lock<std::mutex> locker(printMutex);
                 std::cout << markerNumber << " break " << errorMarkersIndexes.size() << std::endl;
             }
+            */
+            {
+                std::unique_lock<std::mutex> locker(arrayMutex);
+                //std::cout << markerNumber << " locked " <<  std::endl;
+                while(!stop) {
+                    markerContinue.wait(locker);
+                }
+                //std::cout << markerNumber << " unlocked " << std::endl;
+            }
+
+            if(indexMarkerToStop == markerNumber) {
+                std::unique_lock<std::mutex> locker(arrayMutex);
+                //std::cout << markerNumber << " changing " << errorMarkersIndexes.size() << std::endl;
+                while(changedCount > -1) {
+                    --changedCount;
+                    //std::cout << changedCount << " " << changedNumbers[changedCount] << std::endl;
+                    array[changedNumbers[changedCount]] = 0;
+
+                }
+                ind = false;
+                finalWork = true;
+            } else {
+                std::unique_lock<std::mutex> locker(arrayMutex);
+                //std::cout << markerNumber << " final waiting " <<  std::endl;
+                while(!finalWork) {
+                    finalContinue.wait(locker);
+                }
+                //std::cout << markerNumber << " working again " <<  std::endl;
+            }
         }
     }
 
-
+    {
+        //std::unique_lock<std::mutex> locker(printMutex);
+        //std::cout << markerNumber << " stop " << errorMarkersIndexes.size() << std::endl;
+        markerStopWait = true;
+        endMarker.notify_all();
+    }
 }
 
 void markerMain() {
@@ -84,6 +136,8 @@ void markerMain() {
 
     continueWork = false;
 
+
+
     int i = 0;
     while(i < markerCount) {
         markersThreadsVector.push_back(std::thread(marker,i+1));
@@ -93,16 +147,59 @@ void markerMain() {
 
     continueWork = true;
     markerContinue.notify_all();
-    {
-        std::unique_lock<std::mutex> locker(queueMutex);
-        while(errorMarkersIndexes.size() < markerCount) queueCheck.wait(locker);
-    }
 
-    {
-        std::unique_lock<std::mutex> locker(printMutex);
-        std::cout << "Main queue full " << errorMarkersIndexes.size() << std::endl;
+
+    while(deletedMarkersCount < markerCount) {
+
+        stop = false;
+
+        {
+            std::unique_lock<std::mutex> locker(queueMutex);
+            while (errorMarkersIndexes.size() < markerCount - deletedMarkersCount) queueCheck.wait(locker);
+        }
+
+        finalWork = false;
+        markerStopWait = false;
+        /*
+        {
+            std::unique_lock<std::mutex> locker(printMutex);
+            std::cout << "Main queue full " << errorMarkersIndexes.size() << std::endl;
+        }
+        */
+        {
+            {
+                std::unique_lock<std::mutex> arrayLocker(arrayMutex);
+                print(array, size);
+                std::cout << "Input marker number to stop: " << std::endl;
+                std::cin >> indexMarkerToStop;
+            }
+
+            {
+                std::unique_lock<std::mutex> locker(queueMutex);
+                while (!errorMarkersIndexes.empty()) errorMarkersIndexes.pop();
+            }
+
+            stop = true;
+            markerContinue.notify_all();
+            deletedMarkersCount++;
+
+            {
+                std::unique_lock<std::mutex> locker(queueMutex);
+                while (!markerStopWait) endMarker.wait(locker);
+            }
+
+            {
+                std::unique_lock<std::mutex> locker(printMutex);
+                print(array, size);
+                //std::cout << errorMarkersIndexes.size() << " " << deletedMarkersCount << std::endl;
+            }
+
+            finalWork = true;
+            finalContinue.notify_all();
+        }
+
+
     }
-    continueWork = false;
 
     while( i < markerCount) {
         markersThreadsVector[i].join();

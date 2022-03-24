@@ -40,6 +40,68 @@ include CMakeFiles/rules.ninja
 # Logical path to working directory; prefix for absolute paths.
 
 cmake_ninja_workdir = /Users/maksim/Documents/C++/Operating-Systems-Labs/lab3C23/cmake-build-debug/
+# =============================================================================
+# Object build statements for EXECUTABLE target 2
+
+
+#############################################
+# Order-only phony target for 2
+
+build cmake_object_order_depends_target_2: phony || CMakeFiles/2.dir
+
+build CMakeFiles/2.dir/main2.cpp.o: CXX_COMPILER__2_Debug /Users/maksim/Documents/C++/Operating-Systems-Labs/lab3C23/main2.cpp || cmake_object_order_depends_target_2
+  DEP_FILE = CMakeFiles/2.dir/main2.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.0.sdk -std=gnu++2a
+  OBJECT_DIR = CMakeFiles/2.dir
+  OBJECT_FILE_DIR = CMakeFiles/2.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target 2
+
+
+#############################################
+# Link the executable 2
+
+build 2: CXX_EXECUTABLE_LINKER__2_Debug CMakeFiles/2.dir/main2.cpp.o
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.0.sdk
+  OBJECT_DIR = CMakeFiles/2.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = 2
+  TARGET_PDB = 2.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target 1
+
+
+#############################################
+# Order-only phony target for 1
+
+build cmake_object_order_depends_target_1: phony || CMakeFiles/1.dir
+
+build CMakeFiles/1.dir/main1.cpp.o: CXX_COMPILER__1_Debug /Users/maksim/Documents/C++/Operating-Systems-Labs/lab3C23/main1.cpp || cmake_object_order_depends_target_1
+  DEP_FILE = CMakeFiles/1.dir/main1.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.0.sdk -std=gnu++2a
+  OBJECT_DIR = CMakeFiles/1.dir
+  OBJECT_FILE_DIR = CMakeFiles/1.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target 1
+
+
+#############################################
+# Link the executable 1
+
+build 1: CXX_EXECUTABLE_LINKER__1_Debug CMakeFiles/1.dir/main1.cpp.o
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.0.sdk
+  OBJECT_DIR = CMakeFiles/1.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = 1
+  TARGET_PDB = 1.dbg
+
 
 #############################################
 # Utility command for rebuild_cache
@@ -111,7 +173,7 @@ build lab3C23: CXX_EXECUTABLE_LINKER__lab3C23_Debug CMakeFiles/lab3C23.dir/main.
 #############################################
 # Folder: /Users/maksim/Documents/C++/Operating-Systems-Labs/lab3C23/cmake-build-debug
 
-build all: phony lab3C23
+build all: phony 2 1 lab3C23
 
 # =============================================================================
 # Built-in targets
