@@ -5,7 +5,7 @@
 // Created by Максим on 11.03.22.
 //
 
-DWORD WINAPI marker(void* arguments) {
+unsigned int WINAPI marker(void* arguments) {
     markerArguments* params = (markerArguments*) arguments;
     srand(params->markerNumber);
     WaitForSingleObject(params->startEvent,INFINITE);
